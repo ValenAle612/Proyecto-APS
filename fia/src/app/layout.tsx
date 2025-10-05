@@ -10,10 +10,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <nav className="fixed top-0 left-0 w-full bg-white/20 backdrop-blur-lg text-white z-50 border-b border-white/10">
           <div className="max-w-7xl mx-auto flex items-center justify-between px-8 py-6">
             {/* Logo + Nombre */}
-            <div className="flex items-center gap-3">
+            <Link href="/" className="flex items-center gap-3 cursor-pointer">
               <Image src="/fia-logo.png" alt="FIA" width={60} height={60} />
-              <span className="text-xl font-bold">FIA Platform</span>
-            </div>
+              <span className="text-white text-xl font-black [text-shadow:2px_2px_0_#002c63,-2px_-2px_0_#002c63,2px_-2px_0_#002c63,-2px_2px_0_#002c63]">FIA Platform</span>
+            </Link>
 
             {/* Links */}
             <div className="flex gap-8 text-medium font-light">

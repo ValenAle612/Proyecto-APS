@@ -14,6 +14,8 @@ const config: Config = {
         background: "var(--background)",
         foreground: "var(--foreground)",
         background_fia: "#2a2a2c",
+        gris: "#252832ff",
+        azul: "#002c63"
       },
       fontFamily: {
         sans: [

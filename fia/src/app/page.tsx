@@ -1,16 +1,45 @@
 export default function Home() {
   return (
-    <main className="
-      bg-[url('/bg_fia')] bg-cover bg-center bg-fixed
-      flex flex-col items-center justify-center py-8 px-4
-      min-h-screen
-      pt-20
-    ">
-      <div className="flex h-screen items-center justify-center bg-gradient-to-r from-purple-500 to-pink-500">
-        <h1 className="text-5xl font-extrabold text-white drop-shadow-lg">
-          VBNB con Tailwind 🚀
+    <main
+      className="
+        relative min-h-screen flex flex-col items-center justify-center
+        bg-[url('/fia-bg.png')] bg-cover bg-center bg-fixed text-white
+        px-6 pt-24 pb-12
+      "
+    >
+      {/* Capa de oscurecimiento para mejorar contraste */}
+      <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" />
+
+      {/* Contenido principal */}
+      <section className="relative z-10 text-center max-w-3xl">
+        <h1 className="text-5xl md:text-6xl font-bold tracking-tight mb-6">
+          FIA Platform
         </h1>
-      </div>
+        <p className="text-lg md:text-xl text-gray-300 mb-8">
+          Plataforma no oficial de la Federación Internacional del Automóvil.  
+          Consulta el calendario, clasificaciones y reglamentos actualizados del campeonato.
+        </p>
+
+        <div className="flex justify-center gap-4">
+          <a
+            href="/calendario"
+            className="bg-white text-black font-medium px-6 py-3 rounded-full hover:bg-gray-200 transition"
+          >
+            Ver calendario
+          </a>
+          <a
+            href="/pilotos"
+            className="border border-white text-white font-medium px-6 py-3 rounded-full hover:bg-white hover:text-black transition"
+          >
+            Ranking de pilotos
+          </a>
+        </div>
+      </section>
+
+      {/* Pie decorativo */}
+      <footer className="absolute bottom-6 text-sm text-gray-400 z-10">
+        © {new Date().getFullYear()} Federación Internacional del Automóvil
+      </footer>
     </main>
   );
 }
