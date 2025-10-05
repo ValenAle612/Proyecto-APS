@@ -12,7 +12,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             {/* Logo + Nombre */}
             <Link href="/" className="flex items-center gap-3 cursor-pointer">
               <Image src="/fia-logo.png" alt="FIA" width={60} height={60} />
-              <span className="text-white text-xl font-black [text-shadow:2px_2px_0_#002c63,-2px_-2px_0_#002c63,2px_-2px_0_#002c63,-2px_2px_0_#002c63]">FIA Platform</span>
+              <span className="text-white text-xl font-black">FIA Platform</span>
             </Link>
 
             {/* Links */}
