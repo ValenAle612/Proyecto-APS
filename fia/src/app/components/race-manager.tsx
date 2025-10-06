@@ -91,7 +91,7 @@ export function RaceManager() {
         <div className="flex justify-end">
           <Button
             onClick={() => setIsAdding(true)}
-            className="gap-2 bg-primary font-mono uppercase tracking-wide text-primary-foreground hover:bg-primary/90"
+            className="gap-2 bg-primary font-mono font-bold uppercase tracking-wide text-primary-foreground hover:bg-primary/90"
           >
             <Plus className="h-4 w-4" />
             Add Race
@@ -101,7 +101,7 @@ export function RaceManager() {
 
       {/* Add/Edit Form */}
       {isAdding && (
-        <Card className="group relative overflow-hidden border-azul border-2 bg-black/70 p-6 shadow-2xl backdrop-blur-md transition-all hover:border-white">
+        <Card className="group relative overflow-hidden border-azul border-2 bg-black/70 p-6 shadow-2xl backdrop-blur-md transition-all hover:border-white/50">
           <h3 className="mb-4 font-mono text-lg font-bold uppercase tracking-wide text-foreground">
             {editingId ? "Edit Race" : "Add New Race"}
           </h3>

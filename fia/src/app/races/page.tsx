@@ -14,7 +14,8 @@ export default function Home() {
   return (
      <main className="h-screen w-full mb-96 relative bg-gris_claro/80">
       {/* Header */}
-      <header className="border-b mt-[90px] border-border bg-black/50">
+      <header className="border-b mt-[90px] border-border bg-black/50"
+        style={{ backgroundImage: "url('/f1-bg.png')", backgroundSize: "cover"}}>
         <div className="container mx-auto px-4 py-6">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">

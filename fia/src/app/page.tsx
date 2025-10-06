@@ -5,12 +5,12 @@ export default function Home() {
     <main
       className="
         relative min-h-screen flex flex-col items-center justify-center
-        bg-[url('/fia-bg.png')] bg-cover bg-center bg-fixed text-white
+        bg-[url('/track-bg.png')] bg-cover bg-center bg-fixed text-white
         px-6 pt-24 pb-12
       "
     >
       {/* Capa de oscurecimiento para mejorar contraste */}
-      <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" />
+      <div className="absolute inset-0 bg-black/q0 backdrop-blur-sm" />
 
       {/* Contenido principal */}
       <section className="relative z-10 text-center max-w-3xl">

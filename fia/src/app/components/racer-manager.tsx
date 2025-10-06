@@ -91,7 +91,7 @@ export function RacerManager() {
         <div className="flex justify-end">
           <Button
             onClick={() => setIsAdding(true)}
-            className="gap-2 bg-primary font-mono uppercase tracking-wide text-primary-foreground hover:bg-primary/90"
+            className="gap-2 bg-primary font-mono font-bold uppercase tracking-wide text-primary-foreground hover:bg-primary/90"
           >
             <Plus className="h-4 w-4" />
             Add Racer
@@ -178,11 +178,11 @@ export function RacerManager() {
           .map((racer) => (
             <Card
               key={racer.id}
-              className="group relative overflow-hidden border-azul border-2 bg-black/70 p-6 shadow-2xl backdrop-blur-md transition-all hover:border-white"
+              className="group relative overflow-hidden border-azul border-2 bg-black/70 p-6 shadow-2xl backdrop-blur-md transition-all hover:border-white/50"
             >
               <div className="mb-4 flex items-start justify-between">
-                <div className="flex h-16 w-16 items-center justify-center rounded-lg bg-primary/10 border-2 border-primary">
-                  <span className="font-mono text-2xl font-bold text-primary">{racer.number}</span>
+                <div className="flex h-16 w-16 items-center justify-center rounded-lg bg-azul/90 border-2 border-white/20">
+                  <span className="font-mono text-2xl font-bold text-white/80">{racer.number}</span>
                 </div>
                 <div className="flex gap-1">
                   <Button
