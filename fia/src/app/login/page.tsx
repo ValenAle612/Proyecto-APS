@@ -16,7 +16,7 @@ export default function LoginPage() {
   return (
     <div
       className="h-screen w-full flex items-center justify-center bg-black relative"
-      style={{ backgroundImage: "url('/fia-bg.png')", backgroundSize: "cover" }}
+      style={{ backgroundImage: "url('/f1-bg.png')", backgroundSize: "cover" }}
     >
       {/* Overlay elegante */}
       <div className="absolute inset-0 bg-black/70"></div>

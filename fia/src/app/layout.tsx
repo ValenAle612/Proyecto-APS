@@ -1,14 +1,29 @@
+//app/layout.tsx
 import Image from "next/image";
 import Link from "next/link";
-import "@/app/ui/global.css";
+import "@/app/components/ui/global.css";
+import Notificaciones from "@/app/components/ui/Notificaciones";
+import { UserIcon } from "@heroicons/react/24/outline";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "FIA Platform",
+  description: "FIA Platform",
+  generator: "",
+}
+
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="es">
-      <body className="flex flex-col min-h-screen bg-black text-white">
+      <body className="flex flex-col min-h-screen bg-gris_claro/80 text-white font-sans ${GeistSans.variable} ${GeistMono.variable}">
         {/* Navbar estilo Apple */}
-        <nav className="fixed top-0 left-0 w-full bg-white/20 backdrop-blur-lg text-white z-50 border-b border-white/10">
-          <div className="max-w-7xl mx-auto flex items-center justify-between px-8 py-6">
+        <nav
+          className="fixed top-0 left-0 w-full backdrop-blur-lg bg-white/10 border-b border-white/20 
+          shadow-[0_4px_30px_rgba(0,0,0,0.4)] before:content-[''] before:absolute before:top-0 before:left-0 before:w-full before:h-[1px] before:bg-white/40
+          z-50"
+        >
+          <div className="max-w-7xl mx-auto flex items-center justify-between px-8 py-6 relative">
             {/* Logo + Nombre */}
             <Link href="/" className="flex items-center gap-3 cursor-pointer">
               <Image src="/fia-logo.png" alt="FIA" width={60} height={60} />
@@ -16,17 +31,33 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             </Link>
 
             {/* Links */}
-            <div className="flex gap-8 text-medium font-light">
-              <Link href="/calendario" className="hover:text-white transition">Calendario</Link>
-              <Link href="/pilotos" className="hover:text-white transition">Pilotos</Link>
-              <Link href="/puntajes" className="hover:text-white transition">Puntajes</Link>
-              <Link href="/notificaciones" className="hover:text-white transition">Notificaciones</Link>
+            <div className="flex text-medium gap-3 items-center font-light">
+              <div className="flex items-center gap-8 mr-4">
+                <Link href="/races" className="text-white hover:text-white/50 transition">
+                  Races
+                </Link>
+                <Link href="/score" className="text-white hover:text-white/50 transition">
+                  Score
+                </Link>
+              </div>
+
+              {/* Campana de notificaciones */}
+              <Notificaciones />
+
+              {/* Botón de login */}
+              <Link
+                href="/login"
+                className="flex items-center px-3 py-1.5 rounded-full hover:bg-white/10 transition hover:scale-110 transition-transform"
+              >
+                <UserIcon className="w-7 h-7 text-white" />
+              </Link>
             </div>
           </div>
         </nav>
 
+
         {/* Contenido */}
-        <main className="flex-grow bg-black">
+        <main className="flex-grow bg-gris_claro">
           {children}
         </main>
 

@@ -1,4 +1,4 @@
-// app/ui/fonts.ts
+// app/components/ui/fonts.ts
 import { Inter } from 'next/font/google';
 import { Outfit } from 'next/font/google';
 
