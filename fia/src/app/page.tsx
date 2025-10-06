@@ -10,14 +10,14 @@ export default function Home() {
       "
     >
       {/* Capa de oscurecimiento para mejorar contraste */}
-      <div className="absolute inset-0 bg-black/q0 backdrop-blur-sm" />
+      <div className="absolute inset-0 bg-black/20 backdrop-blur-sm" />
 
       {/* Contenido principal */}
-      <section className="relative z-10 text-center max-w-3xl">
+      <section className="relative z-10 text-center max-w-full bg-azul/50 p-8 rounded-xl">
         <h1 className="text-5xl md:text-6xl font-bold tracking-tight mb-6">
           FIA Platform
         </h1>
-        <p className="text-lg md:text-xl text-gray-300 mb-8">
+        <p className="text-lg md:text-xl text-gray-300 mb-8 max-w-3xl">
           Plataforma no oficial de la Federación Internacional del Automóvil.  
           Consulta el calendario, clasificaciones y reglamentos actualizados del campeonato.
         </p>
