@@ -5,6 +5,9 @@ import "@/app/components/ui/global.css";
 import Notificaciones from "@/app/components/ui/Notificaciones";
 import { UserIcon } from "@heroicons/react/24/outline";
 import type { Metadata } from "next";
+import dbConnect from "./lib/mongodb";
+
+dbConnect();
 
 export const metadata: Metadata = {
   title: "FIA Platform",
@@ -19,9 +22,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="flex flex-col min-h-screen bg-gris_claro/80 text-white font-sans ${GeistSans.variable} ${GeistMono.variable}">
         {/* Navbar estilo Apple */}
         <nav
-          className="fixed top-0 left-0 w-full backdrop-blur-lg bg-white/10 border-b border-white/20 
+          className="fixed top-0 left-0 w-full bg-gray-900 supports-[backdrop-filter]:bg-gray-900/90 backdrop-blur-lg border-b border-white/20 
           shadow-[0_4px_30px_rgba(0,0,0,0.4)] before:content-[''] before:absolute before:top-0 before:left-0 before:w-full before:h-[1px] before:bg-white/40
-          z-50"
+          z-50 will-change-transform"
         >
           <div className="max-w-7xl mx-auto flex items-center justify-between px-8 py-6 relative">
             {/* Logo + Nombre */}
