@@ -18,6 +18,7 @@
         "name": "next"
       }
     ],
+    "baseUrl": ".", // <-- Esta línea le dice a TS que la base para las rutas es el directorio raíz.
     "paths": {
       "@/*": ["./src/*"]
     }

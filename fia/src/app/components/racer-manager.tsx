@@ -1,67 +1,78 @@
 "use client"
 
 import type React from "react"
-
-import { useState } from "react"
+import { useState, useEffect } from "react" // Importamos useEffect
 import { Button } from "@/app/components/ui/button"
 import { Input } from "@/app/components/ui/input"
 import { Card } from "@/app/components/ui/card"
 import { Plus, Pencil, Trash2, Trophy, Flag } from "lucide-react"
 
+// La interfaz ahora usará `_id` que viene de MongoDB
 interface Racer {
-  id: string
-  name: string
-  team: string
-  number: number
-  nationality: string
+  _id: string;
+  name: string;
+  team: string;
+  number: number;
+  nationality: string;
 }
 
 export function RacerManager() {
-  const [racers, setRacers] = useState<Racer[]>([
-    {
-      id: "1",
-      name: "Max Verstappen",
-      team: "Red Bull Racing",
-      number: 1,
-      nationality: "Netherlands",
-    },
-    {
-      id: "2",
-      name: "Lewis Hamilton",
-      team: "Mercedes",
-      number: 44,
-      nationality: "United Kingdom",
-    },
-  ])
-  const [isAdding, setIsAdding] = useState(false)
-  const [editingId, setEditingId] = useState<string | null>(null)
+  const [racers, setRacers] = useState<Racer[]>([]);
+  const [isAdding, setIsAdding] = useState(false);
+  const [editingId, setEditingId] = useState<string | null>(null);
   const [formData, setFormData] = useState({
     name: "",
     team: "",
     number: "",
     nationality: "",
-  })
+  });
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    if (editingId) {
-      setRacers(
-        racers.map((racer) =>
-          racer.id === editingId ? { ...racer, ...formData, number: Number.parseInt(formData.number) } : racer,
-        ),
-      )
-      setEditingId(null)
-    } else {
-      const newRacer: Racer = {
-        id: Date.now().toString(),
-        ...formData,
-        number: Number.parseInt(formData.number),
-      }
-      setRacers([...racers, newRacer])
+  // Función para cargar los pilotos desde la API
+  const fetchRacers = async () => {
+    try {
+      const response = await fetch('/api/racers');
+      const data = await response.json();
+      setRacers(data);
+    } catch (error) {
+      console.error("Error al cargar los pilotos:", error);
     }
-    setFormData({ name: "", team: "", number: "", nationality: "" })
-    setIsAdding(false)
-  }
+  };
+
+  // useEffect para cargar los pilotos cuando el componente se monta
+  useEffect(() => {
+    fetchRacers();
+  }, []);
+
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const racerData = {
+      ...formData,
+      number: Number.parseInt(formData.number),
+    };
+
+    try {
+      const url = editingId ? `/api/racers/${editingId}` : '/api/racers';
+      const method = editingId ? 'PUT' : 'POST';
+
+      const response = await fetch(url, {
+        method: method,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(racerData),
+      });
+      
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Algo salió mal');
+      }
+
+      handleCancel();
+      await fetchRacers(); // Recargar la lista de pilotos
+    } catch (error: any) {
+      console.error("Error al guardar el piloto:", error);
+      alert(error.message); // Muestra el error al usuario
+    }
+  };
 
   const handleEdit = (racer: Racer) => {
     setFormData({
@@ -69,20 +80,29 @@ export function RacerManager() {
       team: racer.team,
       number: racer.number.toString(),
       nationality: racer.nationality,
-    })
-    setEditingId(racer.id)
-    setIsAdding(true)
-  }
+    });
+    setEditingId(racer._id); // Usamos _id
+    setIsAdding(true);
+  };
 
-  const handleDelete = (id: string) => {
-    setRacers(racers.filter((racer) => racer.id !== id))
-  }
+  const handleDelete = async (id: string) => {
+    if (confirm("¿Estás seguro de que quieres eliminar a este piloto?")) {
+      try {
+        await fetch(`/api/racers/${id}`, {
+          method: 'DELETE',
+        });
+        await fetchRacers(); // Recargar la lista
+      } catch (error) {
+        console.error("Error al eliminar el piloto:", error);
+      }
+    }
+  };
 
   const handleCancel = () => {
-    setIsAdding(false)
-    setEditingId(null)
-    setFormData({ name: "", team: "", number: "", nationality: "" })
-  }
+    setIsAdding(false);
+    setEditingId(null);
+    setFormData({ name: "", team: "", number: "", nationality: "" });
+  };
 
   return (
     <div className="space-y-6">
@@ -99,7 +119,7 @@ export function RacerManager() {
         </div>
       )}
 
-      {/* Add/Edit Form */}
+      {/* Add/Edit Form (Sin cambios en el JSX del formulario) */}
       {isAdding && (
         <Card className="group relative overflow-hidden border-azul border-2 bg-black/70 p-6 shadow-2xl backdrop-blur-md transition-all hover:border-white">
           <h3 className="mb-4 font-mono text-lg font-bold uppercase tracking-wide text-foreground">
@@ -173,11 +193,9 @@ export function RacerManager() {
 
       {/* Racers Grid */}
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-        {racers
-          .sort((a, b) => a.number - b.number)
-          .map((racer) => (
+        {racers.map((racer) => (
             <Card
-              key={racer.id}
+              key={racer._id} // <- CAMBIO: Usar _id como key
               className="group relative overflow-hidden border-azul border-2 bg-black/70 p-6 shadow-2xl backdrop-blur-md transition-all hover:border-white/50"
             >
               <div className="mb-4 flex items-start justify-between">
@@ -196,7 +214,7 @@ export function RacerManager() {
                   <Button
                     size="icon"
                     variant="ghost"
-                    onClick={() => handleDelete(racer.id)}
+                    onClick={() => handleDelete(racer._id)} // <- CAMBIO: Pasar _id
                     className="h-8 w-8 text-muted-foreground hover:text-destructive"
                   >
                     <Trash2 className="h-4 w-4" />
