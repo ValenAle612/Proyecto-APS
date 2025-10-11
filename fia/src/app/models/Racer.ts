@@ -7,6 +7,7 @@ export interface IRacer extends Document {
   team: string;
   number: number;
   nationality: string;
+  category: string; // Nueva propiedad para la categoría del piloto
 }
 
 // Esquema de Mongoose para los pilotos
@@ -29,6 +30,11 @@ const RacerSchema: Schema<IRacer> = new Schema({
   nationality: {
     type: String,
     required: [true, 'La nacionalidad es obligatoria.'],
+    trim: true,
+  },
+  category: {
+    type: String,
+    required: [true, 'La categoría es obligatoria.'],
     trim: true,
   },
 });
