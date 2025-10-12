@@ -4,13 +4,13 @@ import dbConnect from '@/app/lib/mongodb';
 import Racer from '@/app/models/Racer';
 
 interface Params {
-  params: { id: string };
+  params: Promise<{ id: string }>; // ← Cambio: Promise
 }
 
 // ACTUALIZAR un piloto por su ID
 export async function PUT(request: Request, { params }: Params) {
   await dbConnect();
-  const { id } = params;
+  const { id } = await params; // ← Cambio: await params
   try {
     const body = await request.json();
     const updatedRacer = await Racer.findByIdAndUpdate(id, body, {
@@ -32,7 +32,7 @@ export async function PUT(request: Request, { params }: Params) {
 // BORRAR un piloto por su ID
 export async function DELETE(request: Request, { params }: Params) {
   await dbConnect();
-  const { id } = params;
+  const { id } = await params; // ← Cambio: await params
   try {
     const deletedRacer = await Racer.findByIdAndDelete(id);
     if (!deletedRacer) {

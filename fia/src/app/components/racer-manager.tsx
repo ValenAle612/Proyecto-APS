@@ -5,7 +5,7 @@ import { useState, useEffect } from "react"
 import { Button } from "@/app/components/ui/button"
 import { Input } from "@/app/components/ui/input"
 import { Card } from "@/app/components/ui/card"
-import { Plus, Pencil, Trash2, Trophy, Flag, Car, Search, Filter, X } from "lucide-react"
+import { Plus, Pencil, Trash2, Trophy, Flag, Car, Search, Filter, X, UserCircle } from "lucide-react"
 
 interface Racer {
   _id: string;
@@ -14,6 +14,7 @@ interface Racer {
   number: number;
   nationality: string;
   category: string;
+  role: string; // ← AGREGADO
 }
 
 export function RacerManager() {
@@ -26,12 +27,14 @@ export function RacerManager() {
     number: "",
     nationality: "",
     category: "",
+    role: "", // ← AGREGADO
   });
 
   // Estados para filtros
   const [searchTerm, setSearchTerm] = useState("");
   const [filterCategory, setFilterCategory] = useState("");
   const [filterTeam, setFilterTeam] = useState("");
+  const [filterRole, setFilterRole] = useState(""); // ← AGREGADO
   const [showFilters, setShowFilters] = useState(false);
 
   const fetchRacers = async () => {
@@ -85,6 +88,7 @@ export function RacerManager() {
       number: racer.number.toString(),
       nationality: racer.nationality,
       category: racer.category,
+      role: racer.role, // ← AGREGADO
     });
     setEditingId(racer._id);
     setIsAdding(true);
@@ -106,37 +110,44 @@ export function RacerManager() {
   const handleCancel = () => {
     setIsAdding(false);
     setEditingId(null);
-    setFormData({ name: "", team: "", number: "", nationality: "", category: "" });
+    setFormData({ name: "", team: "", number: "", nationality: "", category: "", role: "" }); // ← ACTUALIZADO
   };
 
-  // Función para limpiar todos los filtros
   const clearAllFilters = () => {
     setSearchTerm("");
     setFilterCategory("");
     setFilterTeam("");
+    setFilterRole(""); // ← AGREGADO
   };
 
-  // Obtener categorías únicas de los pilotos
   const uniqueCategories = Array.from(new Set(racers.map(r => r.category))).sort();
-  
-  // Obtener equipos únicos de los pilotos
   const uniqueTeams = Array.from(new Set(racers.map(r => r.team))).sort();
+  const uniqueRoles = ["Titular", "Suplente", "Reserva"]; // ← AGREGADO
 
-  // Filtrar pilotos basado en los criterios
   const filteredRacers = racers.filter(racer => {
     const matchesSearch = racer.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          racer.nationality.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesCategory = !filterCategory || racer.category === filterCategory;
     const matchesTeam = !filterTeam || racer.team === filterTeam;
+    const matchesRole = !filterRole || racer.role === filterRole; // ← AGREGADO
     
-    return matchesSearch && matchesCategory && matchesTeam;
+    return matchesSearch && matchesCategory && matchesTeam && matchesRole; // ← ACTUALIZADO
   });
 
-  const hasActiveFilters = searchTerm || filterCategory || filterTeam;
+  const hasActiveFilters = searchTerm || filterCategory || filterTeam || filterRole; // ← ACTUALIZADO
+
+  // Función para obtener el color del badge según el rol
+  const getRoleBadgeColor = (role: string) => {
+    switch(role) {
+      case 'Titular': return 'bg-green-600/80';
+      case 'Suplente': return 'bg-yellow-600/80';
+      case 'Reserva': return 'bg-blue-600/80';
+      default: return 'bg-gray-600/80';
+    }
+  };
 
   return (
     <div className="space-y-6">
-      {/* Barra superior con botón Add y Filtros */}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         {!isAdding && (
           <Button
@@ -148,7 +159,6 @@ export function RacerManager() {
           </Button>
         )}
         
-        {/* Botón para mostrar/ocultar filtros */}
         {!isAdding && (
           <div className="flex gap-2">
             <Button
@@ -173,11 +183,9 @@ export function RacerManager() {
         )}
       </div>
 
-      {/* Panel de Filtros */}
       {showFilters && !isAdding && (
         <Card className="border-azul border-2 bg-black/70 p-6 shadow-2xl backdrop-blur-md">
           <div className="space-y-4">
-            {/* Búsqueda por texto */}
             <div>
               <label className="mb-2 block text-sm font-medium text-muted-foreground">
                 Search
@@ -193,9 +201,7 @@ export function RacerManager() {
               </div>
             </div>
 
-            {/* Filtros en grid */}
-            <div className="grid gap-4 md:grid-cols-2">
-              {/* Filtro por Categoría */}
+            <div className="grid gap-4 md:grid-cols-3">
               <div>
                 <label className="mb-2 block text-sm font-medium text-muted-foreground">
                   Category
@@ -212,7 +218,6 @@ export function RacerManager() {
                 </select>
               </div>
 
-              {/* Filtro por Equipo */}
               <div>
                 <label className="mb-2 block text-sm font-medium text-muted-foreground">
                   Team
@@ -228,9 +233,25 @@ export function RacerManager() {
                   ))}
                 </select>
               </div>
+
+              {/* ← NUEVO FILTRO DE ROL */}
+              <div>
+                <label className="mb-2 block text-sm font-medium text-muted-foreground">
+                  Role
+                </label>
+                <select
+                  value={filterRole}
+                  onChange={(e) => setFilterRole(e.target.value)}
+                  className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm text-foreground ring-offset-background focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+                >
+                  <option value="">All Roles</option>
+                  {uniqueRoles.map(role => (
+                    <option key={role} value={role}>{role}</option>
+                  ))}
+                </select>
+              </div>
             </div>
 
-            {/* Contador de resultados */}
             <div className="border-t border-border pt-3 text-sm text-muted-foreground">
               Showing {filteredRacers.length} of {racers.length} racers
             </div>
@@ -238,7 +259,6 @@ export function RacerManager() {
         </Card>
       )}
 
-      {/* Formulario Add/Edit */}
       {isAdding && (
         <Card className="group relative overflow-hidden border-azul border-2 bg-black/70 p-6 shadow-2xl backdrop-blur-md transition-all hover:border-white">
           <h3 className="mb-4 font-mono text-lg font-bold uppercase tracking-wide text-foreground">
@@ -299,6 +319,21 @@ export function RacerManager() {
                   className="bg-background text-foreground"
                 />
               </div>
+              {/* ← NUEVO CAMPO DE ROL */}
+              <div>
+                <label className="mb-2 block text-sm font-medium text-muted-foreground">Role</label>
+                <select
+                  required
+                  value={formData.role}
+                  onChange={(e) => setFormData({ ...formData, role: e.target.value })}
+                  className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm text-foreground ring-offset-background focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+                >
+                  <option value="" disabled>Select role...</option>
+                  <option value="Titular">Titular</option>
+                  <option value="Suplente">Suplente</option>
+                  <option value="Reserva">Reserva</option>
+                </select>
+              </div>
             </div>
             <div className="flex gap-3">
               <Button
@@ -320,7 +355,6 @@ export function RacerManager() {
         </Card>
       )}
 
-      {/* Grid de Pilotos - Ahora con filteredRacers */}
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         {filteredRacers.map((racer) => (
           <Card
@@ -354,6 +388,12 @@ export function RacerManager() {
               <h3 className="font-mono text-xl font-bold uppercase leading-tight tracking-tight text-foreground">
                 {racer.name}
               </h3>
+              {/* ← BADGE DE ROL */}
+              <div className="mb-2">
+                <span className={`inline-block rounded-full px-3 py-1 text-xs font-semibold text-white ${getRoleBadgeColor(racer.role)}`}>
+                  {racer.role}
+                </span>
+              </div>
               <div className="space-y-1 text-sm">
                 <div className="flex items-center gap-2 text-muted-foreground">
                   <Trophy className="h-4 w-4" />
@@ -373,7 +413,6 @@ export function RacerManager() {
         ))}
       </div>
 
-      {/* Mensaje cuando no hay resultados */}
       {filteredRacers.length === 0 && !isAdding && (
         <Card className="border-dashed bg-card/50 p-12 text-center">
           <p className="text-muted-foreground">

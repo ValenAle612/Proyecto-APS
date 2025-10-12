@@ -7,7 +7,8 @@ export interface IRacer extends Document {
   team: string;
   number: number;
   nationality: string;
-  category: string; // Nueva propiedad para la categoría del piloto
+  category: string;
+  role: string;
 }
 
 // Esquema de Mongoose para los pilotos
@@ -37,6 +38,14 @@ const RacerSchema: Schema<IRacer> = new Schema({
     required: [true, 'La categoría es obligatoria.'],
     trim: true,
   },
+  role: {
+    type: String,
+    required: [true, 'El rol es obligatorio.'],
+    enum: ['Titular', 'Suplente', 'Reserva'],
+    default: 'Titular',
+  },
+}, {
+  timestamps: true,
 });
 
 // Evitar recompilar el modelo en Next.js
