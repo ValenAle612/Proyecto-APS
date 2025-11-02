@@ -9,12 +9,6 @@ export async function GET() {
       read: false,
       createdAt: new Date(),
     },
-    {
-      id: 2,
-      message: "Notificación de prueba 🏎",
-      read: false,
-      createdAt: new Date(),
-    },
   ];
 
   return NextResponse.json(notifications);
