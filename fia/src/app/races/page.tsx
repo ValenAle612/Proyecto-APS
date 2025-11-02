@@ -12,7 +12,7 @@ export default function Home() {
   const { theme, toggleTheme } = useTheme()
 
   return (
-     <main className="h-screen w-full mb-96 relative bg-gris_claro/80">
+     <main className="h-screen w-full mb-96 relative bg-gray/80">
       {/* Header */}
       <header className="border-b mt-[90px] border-border bg-black/50"
         style={{ backgroundImage: "url('/f1-bg.png')", backgroundSize: "cover"}}>

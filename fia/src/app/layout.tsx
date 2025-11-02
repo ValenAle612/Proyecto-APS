@@ -19,7 +19,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="es">
-      <body className="flex flex-col min-h-screen bg-gris_claro/80 text-white font-sans ${GeistSans.variable} ${GeistMono.variable}">
+      <body className="flex flex-col min-h-screen bg-gray/80 text-white font-sans ${GeistSans.variable} ${GeistMono.variable}">
         {/* Navbar estilo Apple */}
         <nav
           className="fixed top-0 left-0 w-full bg-gray-900 supports-[backdrop-filter]:bg-gray-900/90 backdrop-blur-lg border-b border-white/20 
@@ -39,7 +39,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 <Link href="/races" className="text-white hover:text-white/50 transition">
                   Races
                 </Link>
-                <Link href="/score" className="text-white hover:text-white/50 transition">
+                <Link href="/results" className="text-white hover:text-white/50 transition">
                   Score
                 </Link>
               </div>
@@ -60,7 +60,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
 
         {/* Contenido */}
-        <main className="flex-grow bg-gris_claro">
+        <main className="flex-grow bg-gray-800/80 pt-24 pb-8 min-h-screen">
           {children}
         </main>
 
