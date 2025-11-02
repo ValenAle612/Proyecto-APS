@@ -1,15 +1,17 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import dbConnect from '@/app/lib/mongodb';
 import RaceResult from '@/app/models/RaceResult';
 
 // OBTENER un resultado específico
 export async function GET(
-  request: Request,
-  { params }: { params: { id: string } }
+  req: NextRequest,
+  context: { params: Record<string, string> }
 ) {
   await dbConnect();
+  const { id } = context.params;
+
   try {
-    const result = await RaceResult.findById(params.id)
+    const result = await RaceResult.findById(id)
       .populate('race_id')
       .populate('racer_id');
 
@@ -25,17 +27,20 @@ export async function GET(
 
 // ACTUALIZAR un resultado
 export async function PUT(
-  request: Request,
-  { params }: { params: { id: string } }
+  req: NextRequest,
+  context: { params: Record<string, string> }
 ) {
   await dbConnect();
+  const { id } = context.params;
+
   try {
-    const body = await request.json();
-    const updatedResult = await RaceResult.findByIdAndUpdate(
-      params.id,
-      body,
-      { new: true, runValidators: true }
-    ).populate('race_id').populate('racer_id');
+    const body = await req.json();
+    const updatedResult = await RaceResult.findByIdAndUpdate(id, body, {
+      new: true,
+      runValidators: true,
+    })
+      .populate('race_id')
+      .populate('racer_id');
 
     if (!updatedResult) {
       return NextResponse.json({ error: 'Resultado no encontrado' }, { status: 404 });
@@ -49,12 +54,14 @@ export async function PUT(
 
 // ELIMINAR un resultado
 export async function DELETE(
-  request: Request,
-  { params }: { params: { id: string } }
+  req: NextRequest,
+  context: { params: Record<string, string> }
 ) {
   await dbConnect();
+  const { id } = context.params;
+
   try {
-    const deletedResult = await RaceResult.findByIdAndDelete(params.id);
+    const deletedResult = await RaceResult.findByIdAndDelete(id);
 
     if (!deletedResult) {
       return NextResponse.json({ error: 'Resultado no encontrado' }, { status: 404 });
