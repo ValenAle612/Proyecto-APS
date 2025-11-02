@@ -38,7 +38,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 <Link href="/races" className="text-white hover:text-white/50 transition">
                   Races
                 </Link>
-                <Link href="/score" className="text-white hover:text-white/50 transition">
+                <Link href="/results" className="text-white hover:text-white/50 transition">
                   Score
                 </Link>
               </div>
