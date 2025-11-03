@@ -29,18 +29,19 @@ export async function GET(
 
 // ACTUALIZAR un resultado
 export async function PUT(
-  req: NextRequest,
-  context: { params: Record<string, string> }
+  request: Request,
+  context: { params: Promise<{ id: string }> }
 ) {
   await dbConnect();
-  const { id } = context.params;
+  const { id } = await context.params; // ✅ nuevo formato
 
   try {
-    const body = await req.json();
-    const updatedResult = await RaceResult.findByIdAndUpdate(id, body, {
-      new: true,
-      runValidators: true,
-    })
+    const body = await request.json();
+    const updatedResult = await RaceResult.findByIdAndUpdate(
+      id,
+      body,
+      { new: true, runValidators: true }
+    )
       .populate('race_id')
       .populate('racer_id');
 
@@ -56,11 +57,11 @@ export async function PUT(
 
 // ELIMINAR un resultado
 export async function DELETE(
-  req: NextRequest,
-  context: { params: Record<string, string> }
+  request: Request,
+  context: { params: Promise<{ id: string }> }
 ) {
   await dbConnect();
-  const { id } = context.params;
+  const { id } = await context.params; // ✅ nuevo formato
 
   try {
     const deletedResult = await RaceResult.findByIdAndDelete(id);
