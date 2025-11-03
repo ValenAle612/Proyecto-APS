@@ -1,9 +1,9 @@
 import mongoose from "mongoose";
 
 async function dbConnect() {
-  const MONGODB_URI = process.env.MONGODB_URI?.trim(); // 👈 agrega trim para evitar espacios
+  const MONGODB_URI = process.env.MONGODB_URI;
 
-  console.log("📂 MONGODB_URI dentro de mongodb.ts:", MONGODB_URI);
+  console.log("!MONGODB_URI || MONGODB_URI.length === 0:", !MONGODB_URI || MONGODB_URI.length === 0);
 
   if (!MONGODB_URI || MONGODB_URI.length === 0) {
     throw new Error("Por favor define la variable MONGODB_URI en .env");
