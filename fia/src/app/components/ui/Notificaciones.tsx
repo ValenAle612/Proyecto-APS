@@ -12,7 +12,6 @@ export default function Notificaciones() {
       setNotifs([
         { id: 1, message: "👋 ¡Bienvenido a la plataforma FIA!" },
         { id: 2, message: "Actualización del calendario disponible." },
-        { id: 3, message: "Notificaciones de prueba 🏎️" },
       ]);
     }, 1000);
   }, []);

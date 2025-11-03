@@ -65,7 +65,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         )}
 
         {/* 🔹 Contenido principal */}
-        <main className={`flex-grow bg-gris_claro ${user ? "pt-[130px]" : "pt-[100px]"}`}>
+        <main className={`flex-grow bg-gris_claro ${user ? "pt-[110px]" : "pt-[90px]"}`}>
           {children}
         </main>
 

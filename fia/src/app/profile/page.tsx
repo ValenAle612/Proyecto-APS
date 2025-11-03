@@ -31,15 +31,15 @@ export default function ProfilePage() {
 
         <button
             onClick={() => {
-            localStorage.removeItem("isAuthenticated");
-            localStorage.removeItem("user");
-            router.push("/login");
+                localStorage.removeItem("isAuthenticated");
+                localStorage.removeItem("user");
+                router.push("/login");
+                window.location.reload(); // 🔄 fuerza actualización del layout
             }}
             className="mt-6 bg-white text-black px-6 py-3 rounded-xl font-medium hover:scale-[1.03] transition"
-        >
-            Cerrar sesión
+            >
+                Cerrar sesión
         </button>
-
         </div>
     );
 }
