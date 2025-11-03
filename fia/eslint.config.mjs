@@ -28,19 +28,15 @@ const eslintConfig = [
 
 export default eslintConfig;*/
 // eslint.config.mjs
-import next from "eslint-config-next";
-
-export default [
-  ...next,
-  {
-    ignores: [
-      "node_modules/**",
-      ".next/**",
-      "out/**",
-      "build/**",
-      "next-env.d.ts",
-    ],
-    rules: {
-    },
+export default {
+  extends: ["next/core-web-vitals", "next", "next/typescript"],
+  ignorePatterns: [
+    "node_modules/**",
+    ".next/**",
+    "out/**",
+    "build/**",
+    "next-env.d.ts",
+  ],
+  rules: {
   },
-];
+};
