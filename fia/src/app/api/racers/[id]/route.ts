@@ -4,7 +4,7 @@ import dbConnect from '@/app/lib/mongodb';
 import Racer from '@/app/models/Racer';
 
 interface Params {
-  params: Promise<{ id: string }>; // ← Cambio: Promise
+  params: Promise<{ id: string }>; 
 }
 
 // ACTUALIZAR un piloto por su ID

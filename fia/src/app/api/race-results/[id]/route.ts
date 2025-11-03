@@ -5,13 +5,14 @@ import RaceResult from '@/app/models/RaceResult';
 
 // OBTENER un resultado específico
 export async function GET(
-  req: NextRequest,
-  context: { params: Record<string, string> }
+  request: Request,
+  context: { params: Promise<{ id: string }> }
 ) {
   await dbConnect();
-  const { id } = context.params;
 
   try {
+    const { id } = await context.params;
+
     const result = await RaceResult.findById(id)
       .populate('race_id')
       .populate('racer_id');
