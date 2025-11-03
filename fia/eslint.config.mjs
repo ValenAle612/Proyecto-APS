@@ -1,4 +1,4 @@
-import { dirname } from "path";
+/*import { dirname } from "path";
 import { fileURLToPath } from "url";
 import { FlatCompat } from "@eslint/eslintrc";
 
@@ -26,4 +26,17 @@ const eslintConfig = [
   },
 ];
 
-export default eslintConfig;
+export default eslintConfig;*/
+export default {
+  extends: ["next/core-web-vitals", "next", "next/typescript"],
+  ignorePatterns: [
+    "node_modules/**",
+    ".next/**",
+    "out/**",
+    "build/**",
+    "next-env.d.ts",
+  ],
+  rules: {
+    // Tus reglas personalizadas aquí
+  },
+};
