@@ -1,3 +1,4 @@
+// app/api/race-results/[id]/route.ts
 import { NextRequest, NextResponse } from 'next/server';
 import dbConnect from '@/app/lib/mongodb';
 import RaceResult from '@/app/models/RaceResult';
