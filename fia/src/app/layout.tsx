@@ -5,9 +5,6 @@ import "@/app/components/ui/global.css";
 import Notificaciones from "@/app/components/ui/Notificaciones";
 import { UserIcon } from "@heroicons/react/24/outline";
 import { useEffect, useState } from "react";
-import dbConnect from "./lib/mongodb";
-
-dbConnect();
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<string | null>(null);

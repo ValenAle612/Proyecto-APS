@@ -6,7 +6,7 @@ export default function Home() {
       className="
         relative min-h-screen flex flex-col items-center justify-center
         bg-[url('/track-bg.png')] bg-cover bg-center bg-fixed text-white
-        px-6 pt-24 pb-12
+        px-6  pb-12
       "
     >
       {/* Capa de oscurecimiento para mejorar contraste */}
